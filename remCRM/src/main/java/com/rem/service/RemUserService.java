@@ -1,6 +1,8 @@
 package com.rem.service;
 
+import com.rem.dao.repository.RemUserRepository;
 import com.rem.model.RemUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,11 +13,14 @@ import java.util.List;
  */
 @Service
 public class RemUserService {
+    @Autowired
+    private RemUserRepository remUserRepository;
+
+    public RemUser findRemUserById(Integer integer){
+        return remUserRepository.findOne(integer);
+    }
+
     public List<RemUser> findAllRemUsers(){
-        List<RemUser> remUsers= new ArrayList<RemUser>();
-        remUsers.add(new RemUser(1,"Maksym","Kmets"));
-        remUsers.add(new RemUser(2,"Pavlo","Zubko"));
-        remUsers.add(new RemUser(3,"Anastasiya","Milinchuk"));
-        return remUsers;
+        return (List<RemUser>) remUserRepository.findAll();
     }
 }

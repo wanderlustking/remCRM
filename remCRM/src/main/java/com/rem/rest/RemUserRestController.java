@@ -2,13 +2,11 @@ package com.rem.rest;
 
 import com.rem.model.RemUser;
 import com.rem.service.RemUserService;
+import com.rem.util.RestPreconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,12 +21,12 @@ public class RemUserRestController {
     private RemUserService remUserService;
 
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<List<RemUser>> listAllRemUsers() {
-        List<RemUser> users = remUserService.findAllRemUsers();
-        if(users.isEmpty()){
-            return new ResponseEntity<List<RemUser>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
-        }
-        return new ResponseEntity<List<RemUser>>(users, HttpStatus.OK);
+    public List<RemUser> listAllRemUsers() {
+        return RestPreconditions.checkFound(remUserService.findAllRemUsers());
+
+    }
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public RemUser addRemUser(@PathVariable("id")Integer id) {
+        return RestPreconditions.checkFound(remUserService.findRemUserById(id));
     }
 }

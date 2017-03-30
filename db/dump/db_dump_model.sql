@@ -5,104 +5,107 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema remCRMdb
+-- Schema mydb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `remCRMdb` ;
 
 -- -----------------------------------------------------
--- Schema remCRMdb
+-- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `remCRMdb` DEFAULT CHARACTER SET utf8 ;
-USE `remCRMdb` ;
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
 
 -- -----------------------------------------------------
--- Table `remCRMdb`.`order_statuses`
+-- Table `mydb`.`order_statuses`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `remCRMdb`.`order_statuses` ;
+DROP TABLE IF EXISTS `mydb`.`order_statuses` ;
 
-CREATE TABLE IF NOT EXISTS `remCRMdb`.`order_statuses` (
-  `id_status` INT NOT NULL AUTO_INCREMENT,
-  `status_name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_status`),
-  UNIQUE INDEX `idorders_UNIQUE` (`id_status` ASC))
+CREATE TABLE IF NOT EXISTS `mydb`.`order_statuses` (
+  `id_order_status` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_order_status`),
+  UNIQUE INDEX `idorders_UNIQUE` (`id_order_status` ASC))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `remCRMdb`.`rem_users`
+-- Table `mydb`.`rem_users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `remCRMdb`.`rem_users` ;
+DROP TABLE IF EXISTS `mydb`.`rem_users` ;
 
-CREATE TABLE IF NOT EXISTS `remCRMdb`.`rem_users` (
-  `id_rem_user` INT NOT NULL AUTO_INCREMENT,
-  `user_name` VARCHAR(16) NOT NULL,
-  `user_email` VARCHAR(255) NULL,
-  `user_password` VARCHAR(32) NOT NULL,
+CREATE TABLE IF NOT EXISTS `mydb`.`rem_users` (
+  `username` VARCHAR(16) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(32) NOT NULL,
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_rem_user` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_rem_user`),
-  UNIQUE INDEX `id_UNIQUE` (`id_rem_user` ASC));
+  UNIQUE INDEX `id_UNIQUE` (`id_rem_user` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC));
 
 
 -- -----------------------------------------------------
--- Table `remCRMdb`.`orders`
+-- Table `mydb`.`orders`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `remCRMdb`.`orders` ;
+DROP TABLE IF EXISTS `mydb`.`orders` ;
 
-CREATE TABLE IF NOT EXISTS `remCRMdb`.`orders` (
+CREATE TABLE IF NOT EXISTS `mydb`.`orders` (
   `id_order` INT NOT NULL AUTO_INCREMENT,
-  `order_name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
   `order_status_id` INT NOT NULL,
   `reported_by` INT NULL,
-  `order_assignee` INT NOT NULL,
-  `order_client` INT NOT NULL,
+  `assignee` INT NOT NULL,
+  `client` INT NOT NULL,
+  `due_date` DATE NULL,
+  `reported_when` DATE NULL,
+  `price` INT NULL,
   PRIMARY KEY (`id_order`),
   UNIQUE INDEX `idorders_UNIQUE` (`id_order` ASC),
   INDEX `fk_orders_order_status1_idx` (`order_status_id` ASC),
   INDEX `fk_orders_user1_idx` (`reported_by` ASC),
-  INDEX `fk_orders_user2_idx` (`order_assignee` ASC),
-  INDEX `fk_orders_user3_idx` (`order_client` ASC),
+  INDEX `fk_orders_user2_idx` (`assignee` ASC),
+  INDEX `fk_orders_user3_idx` (`client` ASC),
   CONSTRAINT `fk_orders_order_status1`
     FOREIGN KEY (`order_status_id`)
-    REFERENCES `remCRMdb`.`order_statuses` (`id_status`)
+    REFERENCES `mydb`.`order_statuses` (`id_order_status`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_user1`
     FOREIGN KEY (`reported_by`)
-    REFERENCES `remCRMdb`.`rem_users` (`id_rem_user`)
+    REFERENCES `mydb`.`rem_users` (`id_rem_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_user2`
-    FOREIGN KEY (`order_assignee`)
-    REFERENCES `remCRMdb`.`rem_users` (`id_rem_user`)
+    FOREIGN KEY (`assignee`)
+    REFERENCES `mydb`.`rem_users` (`id_rem_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_user3`
-    FOREIGN KEY (`order_client`)
-    REFERENCES `remCRMdb`.`rem_users` (`id_rem_user`)
+    FOREIGN KEY (`client`)
+    REFERENCES `mydb`.`rem_users` (`id_rem_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `remCRMdb`.`rem_roles`
+-- Table `mydb`.`rem_roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `remCRMdb`.`rem_roles` ;
+DROP TABLE IF EXISTS `mydb`.`rem_roles` ;
 
-CREATE TABLE IF NOT EXISTS `remCRMdb`.`rem_roles` (
-  `id_rem_role` INT NOT NULL AUTO_INCREMENT,
-  `role_name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_rem_role`),
-  UNIQUE INDEX `idorders_UNIQUE` (`id_rem_role` ASC))
+CREATE TABLE IF NOT EXISTS `mydb`.`rem_roles` (
+  `id_rem_roles` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_rem_roles`),
+  UNIQUE INDEX `idorders_UNIQUE` (`id_rem_roles` ASC))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `remCRMdb`.`users_has_roles`
+-- Table `mydb`.`user_has_roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `remCRMdb`.`users_has_roles` ;
+DROP TABLE IF EXISTS `mydb`.`user_has_roles` ;
 
-CREATE TABLE IF NOT EXISTS `remCRMdb`.`users_has_roles` (
+CREATE TABLE IF NOT EXISTS `mydb`.`user_has_roles` (
   `user_id` INT NOT NULL,
   `role_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `role_id`),
@@ -110,46 +113,86 @@ CREATE TABLE IF NOT EXISTS `remCRMdb`.`users_has_roles` (
   INDEX `fk_user_has_role_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_has_role_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `remCRMdb`.`rem_users` (`id_rem_user`)
+    REFERENCES `mydb`.`rem_users` (`id_rem_user`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_has_role_role1`
     FOREIGN KEY (`role_id`)
-    REFERENCES `remCRMdb`.`rem_roles` (`id_rem_role`)
+    REFERENCES `mydb`.`rem_roles` (`id_rem_roles`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------
--- Table `remCRMdb`.`prices`
+-- Table `mydb`.`devices`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `remCRMdb`.`prices` ;
+DROP TABLE IF EXISTS `mydb`.`devices` ;
 
-CREATE TABLE IF NOT EXISTS `remCRMdb`.`prices` (
-  `id_price` INT NOT NULL AUTO_INCREMENT,
-  `price_currency` VARCHAR(255) NOT NULL,
-  `price_value` INT NOT NULL,
-  PRIMARY KEY (`id_price`));
-
-
--- -----------------------------------------------------
--- Table `remCRMdb`.`devices`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `remCRMdb`.`devices` ;
-
-CREATE TABLE IF NOT EXISTS `remCRMdb`.`devices` (
+CREATE TABLE IF NOT EXISTS `mydb`.`devices` (
   `id_device` INT NOT NULL,
-  `device_name` VARCHAR(45) NULL,
-  `device_category` VARCHAR(45) NULL,
-  `device_brand` VARCHAR(45) NULL,
-  `repair_part_for` INT NOT NULL,
-  PRIMARY KEY (`id_device`),
-  INDEX `fk_device_device1_idx` (`repair_part_for` ASC),
-  CONSTRAINT `fk_device_device1`
-    FOREIGN KEY (`repair_part_for`)
-    REFERENCES `remCRMdb`.`devices` (`id_device`)
+  `name` VARCHAR(45) NULL,
+  `brand` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_device`));
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`categories`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`categories` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`categories` (
+  `id_category` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_category`));
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`device_has_category`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`device_has_category` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`device_has_category` (
+  `device_id` INT NOT NULL,
+  `category_id` INT NOT NULL,
+  `category_parent_category` INT NOT NULL,
+  PRIMARY KEY (`device_id`, `category_id`, `category_parent_category`),
+  INDEX `fk_device_has_category_category1_idx` (`category_id` ASC, `category_parent_category` ASC),
+  INDEX `fk_device_has_category_device1_idx` (`device_id` ASC),
+  CONSTRAINT `fk_device_has_category_device1`
+    FOREIGN KEY (`device_id`)
+    REFERENCES `mydb`.`devices` (`id_device`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_device_has_category_category1`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `mydb`.`categories` (`id_category`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`orders_has_device`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`orders_has_device` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`orders_has_device` (
+  `orders_id` INT NOT NULL,
+  `device_id` INT NOT NULL,
+  `device_qnt` INT NULL,
+  PRIMARY KEY (`orders_id`, `device_id`),
+  INDEX `fk_orders_has_device_device1_idx` (`device_id` ASC),
+  INDEX `fk_orders_has_device_orders1_idx` (`orders_id` ASC),
+  CONSTRAINT `fk_orders_has_device_orders1`
+    FOREIGN KEY (`orders_id`)
+    REFERENCES `mydb`.`orders` (`id_order`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_orders_has_device_device1`
+    FOREIGN KEY (`device_id`)
+    REFERENCES `mydb`.`devices` (`id_device`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

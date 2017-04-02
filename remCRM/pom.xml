@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>finance</groupId>
-    <artifactId>MargaretLabs</artifactId>
+    <groupId>crm</groupId>
+    <artifactId>RemCRM</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>MargaretLabs</name>
+    <name>RemCRM</name>
 
     <properties>
         <jdk.version>1.8</jdk.version>
@@ -16,6 +16,7 @@
         <servletapi.version>3.1.0</servletapi.version>
         <spring.core.version>4.3.5.RELEASE</spring.core.version>
         <guava.version>10.0.1</guava.version>
+        <java.compiler.verstion>1.8</java.compiler.verstion>
     </properties>
 
 
@@ -32,12 +33,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.core.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- Spring DATA -->
         <dependency>
@@ -83,6 +78,18 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!--Lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+        </dependency>
+        <!--validation-->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -92,6 +99,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
+                <configuration>
+                    <compilerVersion>1.8</compilerVersion>
+                </configuration>
             </plugin>
             <!-- Wildfly plugin for deployment -->
             <plugin>
@@ -103,7 +113,7 @@
                     <port>9990</port>
                     <username>remCRMadmin</username>
                     <password>remCRM123</password>
-                    <name>margaretLab.war</name>
+                    <name>RemCRM.war</name>
                     <force>true</force>
                 </configuration>
             </plugin>

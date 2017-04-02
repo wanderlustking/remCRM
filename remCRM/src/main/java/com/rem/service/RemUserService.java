@@ -15,14 +15,19 @@ public class RemUserService {
     @Autowired
     private RemUserRepository remUserRepository;
 
-    public RemUser findRemUserById(Integer integer){
+    public RemUser findRemUserById(Integer integer) {
         return remUserRepository.findOne(integer);
     }
-
     public List<RemUser> findAllRemUsers(){
         return (List<RemUser>) remUserRepository.findAll();
     }
-    public RemUser createRemUser(RemUser user){
+    public RemUser createRemUser(RemUser user) {
         return remUserRepository.save(user);
+    }
+    public RemUser updateRemUser(RemUser user) {
+        return remUserRepository.save(user);
+    }
+    public void deleteTemUserById(Integer id){
+        remUserRepository.delete(id);
     }
 }

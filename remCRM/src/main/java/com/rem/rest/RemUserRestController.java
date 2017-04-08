@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -22,7 +24,7 @@ public class RemUserRestController {
     @Autowired
     private RemUserService remUserService;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/users", method = RequestMethod.GET,headers = "Accept=application/json")
     public ResponseEntity<List<RemUser>> listAllRemUsers() {
         List<RemUser> users = remUserService.findAllRemUsers();
         if(users.isEmpty()){
@@ -31,7 +33,7 @@ public class RemUserRestController {
         return new ResponseEntity<List<RemUser>>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET,headers = "Accept=application/json")
     public ResponseEntity<RemUser> addRemUser(@PathVariable("id")Integer id) {
         RemUser user = remUserService.findRemUserById(id);
         if (user == null) {
@@ -40,8 +42,8 @@ public class RemUserRestController {
         return new ResponseEntity<RemUser>(user,HttpStatus.OK);
     }
 
-    @RequestMapping(value ="/users", method = RequestMethod.POST )
-    public ResponseEntity<RemUser> create(@RequestBody RemUser remUser ){
+    @RequestMapping(value ="/users", method = RequestMethod.POST,headers = "Accept=application/json")
+    public ResponseEntity<RemUser> create( @Valid @RequestBody RemUser remUser ){
         log.info("User update info: " + remUser.toString());
         return new ResponseEntity<RemUser>(remUserService.createRemUser(remUser), HttpStatus.CREATED);
     }
@@ -58,7 +60,7 @@ public class RemUserRestController {
         return new ResponseEntity<RemUser>(remUserService.updateRemUser(currentUser),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/users/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/users/{id}",method = RequestMethod.DELETE,headers = "Accept=application/json")
     public ResponseEntity<RemUser> delete(@PathVariable("id") Integer id){
         RemUser user = remUserService.findRemUserById(id);
         if (user == null) {

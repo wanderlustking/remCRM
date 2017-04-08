@@ -10,6 +10,7 @@ import lombok.ToString;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,15 +25,18 @@ public class RemUser {
     @Getter @Setter
     private int idRemUser;
 
+    @Size(min = 1,max = 5)
     @Column(name = "user_name",nullable = false)
     @Getter @Setter
     private String userName;
 
 //    @Email(message = "Format of email is incorrect")
+    @Size(min = 1,max = 5)
     @Column(name = "user_email",nullable = false,unique = true)
     @Getter @Setter
     private String userEmail;
 
+    @Size(min = 1,max = 5)
     @Column(name = "user_password",nullable = false)
     @Getter @Setter
     private String userPassword;

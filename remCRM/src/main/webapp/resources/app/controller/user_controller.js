@@ -62,6 +62,7 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
         }else{
             updateUser(self.user, self.user.idRemUser);
             console.log('User updated with id ', self.user.idRemUser);
+            self.user.idRemUser=null;
         }
         reset();
     }
@@ -69,7 +70,7 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
     function edit(id){
         console.log('id to be edited', id);
         for(var i = 0; i < self.users.length; i++){
-            if(self.users[i].id === id) {
+            if(self.users[i].idRemUser === id) {
                 self.user = angular.copy(self.users[i]);
                 break;
             }
@@ -86,7 +87,7 @@ angular.module('myApp').controller('UserController', ['$scope', 'UserService', f
 
 
     function reset(){
-        self.user={id:null,username:'',address:'',email:''};
+        self.user={idRemUser:null,userName:'',userEmail:'',userPassword:''};
         $scope.myForm.$setPristine(); //reset Form
     }
 

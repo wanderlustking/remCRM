@@ -46,7 +46,7 @@ angular.module('myApp').factory('UserService', ['$http', '$q', function($http, $
 
     function updateUser(user, id) {
         var deferred = $q.defer();
-        $http.put(REST_SERVICE_URI+id, user)
+        $http.put(REST_SERVICE_URI+'/'+id, user)
             .then(
                 function (response) {
                     deferred.resolve(response.data);

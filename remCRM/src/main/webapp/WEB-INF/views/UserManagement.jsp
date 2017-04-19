@@ -111,7 +111,7 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.js"></script>
+<script src="<c:url value="/resources/js/angular.min.js" />"></script>
 <script src="<c:url value='/resources/app/app.js' />"></script>
 <script src="<c:url value='/resources/app/service/user_service.js' />"></script>
 <script src="<c:url value='/resources/app/controller/user_controller.js' />"></script>

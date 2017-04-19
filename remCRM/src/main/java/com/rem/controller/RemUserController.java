@@ -16,9 +16,4 @@ public class RemUserController {
         return "UserManagement";
     }
 
-
-    @RequestMapping(value = "index", method = RequestMethod.GET)
-    public String getIndexPage() {
-        return "index";
-    }
 }

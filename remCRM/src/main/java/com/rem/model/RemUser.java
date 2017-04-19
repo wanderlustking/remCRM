@@ -41,4 +41,6 @@ public class RemUser {
     @Getter @Setter
     private String userPassword;
 
+
+    //// TODO: 4/9/2017 ManyToMany to RemRole
 }

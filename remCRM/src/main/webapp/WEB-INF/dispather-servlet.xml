@@ -1,43 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
-
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <context:component-scan base-package="com.rem" />
     <mvc:annotation-driven />
+
     <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <!--Import database spring config-->
+    <import resource="classpath:database-config.xml" />
+
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     </bean>
-
-    <!-- EntityManagerFactory -->
-    <bean id="emf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="unit" />
-    </bean>
-
-    <!--@Transaction annotation support -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <!--Обеспечивает работу с транзакциями в Spring -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="emf"/>
-    </bean>
-
-
-
-
-
-    <!-- Need for Repository abstraction -->
-    <jpa:repositories base-package="com.rem.dao" entity-manager-factory-ref="emf"
-                      transaction-manager-ref="transactionManager"/>
 </beans>

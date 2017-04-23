@@ -16,4 +16,8 @@ public class RemUserController {
         return "UserManagement";
     }
 
+    @RequestMapping(value = "resources/", method = RequestMethod.GET)
+    public String getIndex() {
+        return "index";
+    }
 }

@@ -5,8 +5,11 @@
 
 http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-    <display-name>Spring4MVCHelloWorldDemo Web Application</display-name>
+    <display-name>REM CRM. Online CRM</display-name>
 
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>

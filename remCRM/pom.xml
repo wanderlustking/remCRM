@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>crm</groupId>
-    <artifactId>RemCRM</artifactId>
+    <groupId>remCRM</groupId>
+    <artifactId>remCRM-core</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>RemCRM</name>
+    <name>remCRM-core</name>
 
     <properties>
         <jdk.version>1.8</jdk.version>
@@ -132,99 +132,29 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <!-- Maven war plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <compilerVersion>1.8</compilerVersion>
-                </configuration>
-            </plugin>
-            <!-- Tomcat plugin for deployment -->
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <url>http://localhost:8080/manager/text</url>
-                    <server>TomcatServer</server>
-                    <path>/</path>
-                </configuration>
-            </plugin>
-
-            <!-- Plugin to execute command  "npm install" and "npm run build" inside /angular directory -->
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.0</version>
-                <configuration>
-                    <workingDirectory>frontend</workingDirectory>
-                    <installDirectory>temp</installDirectory>
-                </configuration>
-
-                <executions>
-                    <!-- It will install nodejs and npm -->
-                    <execution>
-                        <id>install node and npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <configuration>
-                            <nodeVersion>v6.10.2</nodeVersion>
-                            <npmVersion>3.9.5</npmVersion>
-                        </configuration>
-                    </execution>
-
-                    <!-- It will execute command "npm install" inside "/angular" directory -->
-                    <execution>
-                        <id>npm install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-
-                    <!-- It will execute command "npm build" inside "/angular" directory to clean and create "/dist" directory-->
-                    <execution>
-                        <id>npm build</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>run build</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-<!--            &lt;!&ndash; Plugin to copy the content of /angular/dist/ directory to output directory (ie/ /target/transactionManager-1.0/) &ndash;&gt;
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.4.2</version>
-                <executions>
-                    <execution>
-                        <id>default-copy-resources</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <overwrite>true</overwrite>
-                            <outputDirectory>${project.build.directory}/${project.artifactId}-${project.version}/resources</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/frontend/dist</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
+       <plugins>
+                <!--Maven war plugin-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.0</version>
+                    <configuration>
+                        <compilerVersion>1.8</compilerVersion>
+                    </configuration>
+                </plugin>
+               <!--Tomcat plugin for deployment-->
+                <plugin>
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <url>http://localhost:8080/manager/text</url>
+                        <server>TomcatServer</server>
+                        <path>/remCRM-core/</path>
+                        <username>remCRMadmin</username>
+                        <password>remCRM123</password>
+                    </configuration>
+                </plugin>
         </plugins>
     </build>
 </project>

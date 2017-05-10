@@ -90,13 +90,22 @@
             <version>5.1.6</version>
         </dependency>
 
-        <!--JUnit-->
-<!--        <dependency>
+
+        <!-- Testing-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.core.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit-->
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>-->
+        </dependency>
 
 
         <!--Lombok-->
@@ -128,6 +137,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.3.8.RELEASE</version>
         </dependency>
     </dependencies>
 

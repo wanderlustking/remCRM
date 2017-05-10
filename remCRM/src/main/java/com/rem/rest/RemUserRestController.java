@@ -34,9 +34,8 @@ public class RemUserRestController {
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public ResponseEntity<RemUser> getRemUserById(@PathVariable("id") Integer id) {
-        RemUser user = remUserService.findRemUserById(id);
+        RemUser user = remUserService.findRemUser(id);
         if (user == null) {
-            // TODO: 4/9/2017 right way to log concatenated string
             log.info("getRemUserById: Id: " + id + " Not found!");
             return new ResponseEntity<RemUser>(HttpStatus.NOT_FOUND);
         }
@@ -52,9 +51,8 @@ public class RemUserRestController {
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.PUT)
     public ResponseEntity<RemUser> updateRemUser(@PathVariable("id") Integer id, @RequestBody RemUser user) {
-        RemUser currentUser = remUserService.findRemUserById(id);
+        RemUser currentUser = remUserService.findRemUser(id);
         if (currentUser == null) {
-            // TODO: 4/9/2017 right way to log concatenated string
             log.info("updateRemUser: Id: " + id + " Not found!");
             return new ResponseEntity<RemUser>(HttpStatus.NOT_FOUND);
         }
@@ -67,11 +65,11 @@ public class RemUserRestController {
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<RemUser> deleteRemUser(@PathVariable("id") Integer id) {
-        RemUser user = remUserService.findRemUserById(id);
+        RemUser user = remUserService.findRemUser(id);
         if (user == null) {
             return new ResponseEntity<RemUser>(HttpStatus.NOT_FOUND);
         }
-        remUserService.deleteTemUserById(id);
+        remUserService.deleteRemUser(id);
         log.debug("deleteRemUser: {}", id);
         return new ResponseEntity<RemUser>(HttpStatus.NO_CONTENT);
     }

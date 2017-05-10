@@ -1,6 +1,7 @@
 package com.rem.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,11 +14,13 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "rem_users",schema = "remcrmdb")
-@ToString(exclude="id")
-@EqualsAndHashCode(exclude="id")
+@Table(name = "rem_users")
+@ToString()
+@EqualsAndHashCode()
 public class RemUser {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,7 +28,7 @@ public class RemUser {
     @Getter @Setter
     private int idRemUser;
 
-    @Size(min = 1,max = 5)
+//    @Size(min = 1,max = 5)
     @Column(name = "user_name",nullable = false)
     @Getter @Setter
     private String userName;
@@ -36,11 +39,25 @@ public class RemUser {
     @Getter @Setter
     private String userEmail;
 
-    @Size(min = 1,max = 5)
+//    @Size(min = 1,max = 5)
     @Column(name = "user_password",nullable = false)
     @Getter @Setter
     private String userPassword;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_has_roles", joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") })
+    @JsonIgnore
+    @Getter @Setter
+    private List<RemRole> roles;
 
-    //// TODO: 4/9/2017 ManyToMany to RemRole
+    public RemUser() {
+    }
+
+    public RemUser(String userName, String userEmail, String userPassword, List<RemRole> roles) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.roles = roles;
+    }
 }

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <logger name="org.hibernate" level="debug" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
@@ -8,15 +12,13 @@
             </Pattern>
         </layout>
     </appender>
-
-    <logger name="org.springframework" level="info" additivity="false">
+    <!--<logger name="org.springframework" level="info" additivity="false">-->
+        <!--<appender-ref ref="STDOUT" />-->
+    <!--</logger>-->
+    <logger name="org.springframework.transaction" level="debug">
         <appender-ref ref="STDOUT" />
     </logger>
-
-<!--    <logger name="org.hibernate" level="debug" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </logger>-->
-    <logger name="com.rem.rest.RemUserRestController" level="info" additivity="false">
+    <logger name="com.org.springframework.orm.hibernate5.HibernateTransactionManager" level="info" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 

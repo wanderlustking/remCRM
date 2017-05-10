@@ -15,7 +15,7 @@ public class RemUserService {
     @Autowired
     private RemUserRepository remUserRepository;
 
-    public RemUser findRemUserById(Integer integer) {
+    public RemUser findRemUser(Integer integer) {
         return remUserRepository.findOne(integer);
     }
     public List<RemUser> findAllRemUsers(){
@@ -27,7 +27,7 @@ public class RemUserService {
     public RemUser updateRemUser(RemUser user) {
         return remUserRepository.save(user);
     }
-    public void deleteTemUserById(Integer id){
+    public void deleteRemUser(Integer id){
         remUserRepository.delete(id);
     }
 }

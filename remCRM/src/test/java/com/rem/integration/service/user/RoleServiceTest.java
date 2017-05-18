@@ -1,8 +1,7 @@
 package com.rem.integration.service.user;
 
-import com.rem.model.RemRole;
-import com.rem.service.RemRoleService;
-import com.rem.service.RemUserService;
+import com.rem.model.user.RemRole;
+import com.rem.service.user.RemRoleService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +16,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 public class RoleServiceTest {
 
-    @Autowired
-    private RemUserService remUserService;
     @Autowired
     private RemRoleService remRoleService;
 

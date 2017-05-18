@@ -1,7 +1,7 @@
-package com.rem.service;
+package com.rem.service.user;
 
-import com.rem.dao.repository.RemUserRepository;
-import com.rem.model.RemUser;
+import com.rem.dao.repository.user.RemUserRepository;
+import com.rem.model.user.RemUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

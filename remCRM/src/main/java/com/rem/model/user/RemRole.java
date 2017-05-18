@@ -1,4 +1,4 @@
-package com.rem.model;
+package com.rem.model.user;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

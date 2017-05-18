@@ -1,6 +1,6 @@
-package com.rem.dao.repository;
+package com.rem.dao.repository.user;
 
-import com.rem.model.RemRole;
+import com.rem.model.user.RemRole;
 import org.springframework.data.repository.CrudRepository;
 
 /**

@@ -1,10 +1,9 @@
 package com.rem.integration.service.user;
 
-import com.rem.model.RemRole;
-import com.rem.model.RemUser;
-import com.rem.service.RemRoleService;
-import com.rem.service.RemUserService;
-import org.hibernate.SessionFactory;
+import com.rem.model.user.RemRole;
+import com.rem.model.user.RemUser;
+import com.rem.service.user.RemRoleService;
+import com.rem.service.user.RemUserService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
